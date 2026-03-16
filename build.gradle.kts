@@ -239,10 +239,9 @@ publishing {
     repositories {
         maven {
             name = "WagYourMaven"
-            url = uri("https://maven.wagyourtail.xyz/" + if (project.hasProperty("version_snapshot")) "snapshots/" else "releases/")
+            url = uri("https://repo.redlance.org/public")
             credentials {
-                username = project.findProperty("mvn.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("mvn.key") as String? ?: System.getenv("TOKEN")
+                username = "dima_dencep"
             }
         }
     }
