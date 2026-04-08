@@ -46,7 +46,11 @@ open class FG3MinecraftTransformer(project: Project, val parent: ForgeLikeMinecr
     ) {
 
     val isModernNeo by lazy {
-        providerName.equals("NeoForged-FG3", true) && !provider.obfuscated
+        parent is NeoForgedMinecraftTransformer && !provider.obfuscated
+    }
+
+    val isModernForge by lazy {
+        parent is MinecraftForgeMinecraftTransformer && !provider.obfuscated
     }
 
     val cacheDir by lazy {
@@ -410,7 +414,7 @@ open class FG3MinecraftTransformer(project: Project, val parent: ForgeLikeMinecr
         if (output.path.exists() && !project.unimined.forceReload) {
             return output
         }
-        if (userdevCfg["notchObf"]?.asBoolean == true) {
+        if (userdevCfg["notchObf"]?.asBoolean == true || isModernForge) {
             executeMcp("merge", output.path)
         } else if (isModernNeo) {
             executeMcp("preProcessJar", output.path)
